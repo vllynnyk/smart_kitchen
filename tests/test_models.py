@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from kitchen_board.models import DishType, Cook
+from kitchen_board.models import DishType, Cook, Ingredient
 
 
 class DishTypeTest(TestCase):
@@ -64,3 +64,13 @@ class CookTest(TestCase):
         )
         all_cook = Cook.objects.all()
         self.assertEqual(all_cook[0].username, "john_d")
+
+
+class IngredientTest(TestCase):
+    def test_ingredient_str(self):
+        ingredient = Ingredient.objects.create(
+            name="Apple",
+            stock_count=10,
+        )
+        self.assertEqual(str(ingredient),
+                         f"{ingredient.name} ({ingredient.stock_count})")
