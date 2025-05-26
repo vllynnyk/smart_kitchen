@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from kitchen_board.models import DishType
@@ -42,3 +43,12 @@ class CookTest(TestCase):
     def test_cook_creation(self):
         self.assertEqual(self.cook.position, "head_chef")
         self.assertEqual(self.cook.years_of_experience, 5)
+
+    def test_position_choice(self):
+        cook = get_user_model()(
+            username="john_d",
+            password="1234pass",
+            position="dishwasher"
+        )
+        with self.assertRaises(ValidationError):
+            cook.full_clean()
