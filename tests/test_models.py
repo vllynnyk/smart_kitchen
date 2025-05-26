@@ -74,3 +74,15 @@ class IngredientTest(TestCase):
         )
         self.assertEqual(str(ingredient),
                          f"{ingredient.name} ({ingredient.stock_count})")
+
+    def test_ingredient_ordering(self):
+            Ingredient.objects.create(
+                name="Banana",
+                stock_count=5,
+            )
+            Ingredient.objects.create(
+                name="Apple",
+                stock_count=10,
+            )
+            all_ingredients = Ingredient.objects.all()
+            self.assertEqual(all_ingredients[0].name, "Apple")
