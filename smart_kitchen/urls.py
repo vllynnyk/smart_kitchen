@@ -19,4 +19,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include("kitchen_board.urls", namespace="kitchen_board")),
 ]
