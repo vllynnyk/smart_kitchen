@@ -3,7 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 
 from kitchen_board.models import (Cook,
                                   DishType,
-                                  Ingredient,)
+                                  Ingredient,
+                                  Dish,)
 
 
 admin.site.register(DishType)
@@ -33,3 +34,10 @@ class CookAdmin(UserAdmin):
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     search_fields = ("name",)
+
+
+@admin.register(Dish)
+class DishAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "dish_type")
+    search_fields = ("name",)
+    list_filter = ("dish_type",)
