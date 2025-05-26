@@ -31,3 +31,9 @@ class CookTest(TestCase):
             position = "head_chef",
             years_of_experience=5,
         )
+
+    def test_cook_str(self):
+        cook = self.cook
+        self.assertEqual(str(cook),
+                         f"{cook.username}"
+                         f" ({cook.first_name} {cook.last_name})")
