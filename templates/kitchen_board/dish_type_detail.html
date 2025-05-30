@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ dish_type.name }}</h1>
+
+  {% if dish_type.dishes.exists %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Dish Name</th>
+      </tr>
+      {% for dish in dish_type.dishes.all %}
+        <tr>
+          <td>{{ dish.id }}</td>
+          <td>{{ dish.name }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no dishes for this dish type yet.</p>
+  {% endif %}
+{% endblock %}
