@@ -14,7 +14,10 @@ from kitchen_board.views import (
     DishCreateView,
     DishUpdateView,
     DishDeleteView,
-    CookListView
+    CookListView,
+    CookCreateView,
+    CookPositionUpdateView,
+    CookDeleteView
 )
 
 
@@ -88,5 +91,20 @@ urlpatterns = [
         "cooks/",
         CookListView.as_view(),
         name="cook_list"
+    ),
+    path(
+        "cooks/create/",
+        CookCreateView.as_view(),
+        name="cook_create"
+    ),
+    path(
+        "cooks/<int:pk>/update/",
+        CookPositionUpdateView.as_view(),
+        name="cook_update"
+    ),
+    path(
+        "cooks/<int:pk>/delete/",
+        CookDeleteView.as_view(),
+        name="cook_delete"
     ),
 ]
