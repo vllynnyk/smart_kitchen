@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>
+    Dish List
+    <a href="#" class="btn btn-primary link-to-page">
+      Add Dish
+    </a>
+  </h1>
+
+  {% if dish_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for dish in dish_list %}
+        <tr>
+          <td>
+              {{ dish.id }}
+          </td>
+          <td>
+            <a href="#">{{ dish.name }}</a>
+          </td>
+          <td>
+              {{ dish.price }}
+          </td>
+          <td>
+              {{ dish.description }}
+          </td>
+          <td>
+            <a href="#">
+              Update
+            </a>
+          </td>
+          <td>
+            <a style="color: red"
+              href="#">
+              Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+    <p>There are no dishes on the Kitchen Board.</p>
+  {% endif %}
+{% endblock %}
