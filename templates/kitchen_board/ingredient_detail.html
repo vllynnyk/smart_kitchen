@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ ingredient.name }}</h1>
+
+  {% if ingredient.dishes.exist %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Dish Name</th>
+      </tr>
+      {% for ingredient_dish in ingredient.dish.all %}
+        <tr>
+          <td>{{ ingredient_dish.id }}</td>
+          <td>{{ ingredient_dish.name }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no dishes for this ingredient yet.</p>
+  {% endif %}
+{% endblock %}
