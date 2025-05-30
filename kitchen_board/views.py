@@ -53,6 +53,12 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+class DishTypeDetailView(LoginRequiredMixin, generic.DetailView):
+    model = DishType
+    context_object_name = "dish_type"
+    template_name = "kitchen_board/dish_type_detail.html"
+
+
 class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = DishType
     fields = "__all__"
@@ -95,6 +101,10 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+class IngredientDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Ingredient
+
+
 class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
     model = Ingredient
     fields = "__all__"
@@ -130,6 +140,10 @@ class DishListView(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
+
+
+class DishDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Dish
 
 
 class DishCreateView(LoginRequiredMixin, generic.CreateView):
@@ -170,6 +184,12 @@ class CookListView(LoginRequiredMixin, generic.ListView):
                 username__icontains=form.cleaned_data["username"]
             )
         return queryset
+
+
+class CookDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Cook
+    queryset = Cook.objects.all().prefetch_related("dishes__dish_type")
+
 
 
 class CookCreateView(LoginRequiredMixin, generic.CreateView):
