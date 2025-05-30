@@ -1,7 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.forms import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from kitchen_board.models import Cook
+from kitchen_board.models import Cook, Ingredient, Dish
 
 
 # Forms for model Cook
@@ -24,3 +25,18 @@ class CookPositionUpdateForm(forms.ModelForm):
             "years_of_experience",
         ]
 
+
+# Form for model Dish
+class DishForm(forms.ModelForm):
+    cooks = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    class Meta:
+        model = Dish
+        fields = "__all__"
