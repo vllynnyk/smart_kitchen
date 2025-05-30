@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView
 
+from kitchen_board.forms import DishForm
 from kitchen_board.models import Cook, DishType, Dish, Ingredient
 
 
@@ -90,6 +91,12 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
     paginate_by = 10
     queryset = Dish.objects.select_related("dish_type")
+
+
+class DishCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Dish
+    form_class = DishForm
+    success_url = reverse_lazy("kitchen_board:dish_list")
 
 
 #Cook
