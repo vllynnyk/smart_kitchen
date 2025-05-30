@@ -68,6 +68,12 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
 
+class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Ingredient
+    fields = "__all__"
+    success_url = reverse_lazy("kitchen_board:ingredient_list")
+
+
 #Dish
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
