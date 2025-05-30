@@ -69,6 +69,8 @@ TEMPLATES = [
     },
 ]
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 WSGI_APPLICATION = "smart_kitchen.wsgi.application"
 
 
