@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.forms import forms
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 from kitchen_board.models import Cook, Ingredient, Dish
