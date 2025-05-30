@@ -5,6 +5,7 @@ from kitchen_board.views import (
     DishTypeListView,
     IngredientListView,
     DishListView,
+    CookListView
 )
 
 
@@ -29,4 +30,10 @@ urlpatterns = [
          DishListView.as_view(),
          name="dish_list"
          ),
+    #Cook URLs
+    path(
+        "cooks/",
+        CookListView.as_view(),
+        name="cook_list"
+    ),
 ]
