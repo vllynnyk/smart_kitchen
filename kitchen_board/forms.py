@@ -1,5 +1,5 @@
+from django.forms import forms
 from django.contrib.auth.forms import UserCreationForm
-
 
 from kitchen_board.models import Cook
 
@@ -14,3 +14,13 @@ class CookCreationForm(UserCreationForm):
             "position",
             "years_of_experience",
         )
+
+
+class CookPositionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Cook
+        fields = [
+            "position",
+            "years_of_experience",
+        ]
+
