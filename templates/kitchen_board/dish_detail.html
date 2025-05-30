@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ dish.name }}</h1>
+
+  <p><strong>Price:</strong> {{ dish.price }}</p>
+  <p><strong>Dish Type:</strong> {{ dish.dish_type }}</p>
+  <p><strong>Description:</strong> {{ dish.description }}</p>
+  <p><strong>Ingredients:</strong>
+    {% for ingredient in dish.ingredients.all %}
+      {{ ingredient.name }}
+    {% endfor %}
+  </p>
+  {% if dish.cooks.exists %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Position</th>
+      </tr>
+      {% for cook in dish.cooks.all %}
+        <tr>
+          <td>{{ cook.id }}</td>
+          <td>{{ cook.name }}</td>
+          <td>{{ cook.position }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no cooks for this dish yet.</p>
+  {% endif %}
+{% endblock %}
