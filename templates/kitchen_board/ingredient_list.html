@@ -4,7 +4,7 @@
 {% block content %}
   <h1>
     Ingredient List
-    <a href="#" class="btn btn-primary link-to-page">
+    <a href="{% url 'kitchen_board:ingredient_create' %}" class="btn btn-primary link-to-page">
       Add Ingredient
     </a>
   </h1>
@@ -39,13 +39,13 @@
             {{ ingredient.stock_count}}
           </td>
           <td>
-              <a href="#">
+              <a href="{% url 'kitchen_board:ingredient_update' ingredient.id %}">
                 Update
               </a>
             </td>
             <td>
               <a style="color: red"
-                href="#">
+                href="{% url 'kitchen_board:ingredient_delete' ingredient.id %}">
                 Delete
               </a>
             </td>
