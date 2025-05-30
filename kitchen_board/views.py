@@ -195,14 +195,14 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
 class CookCreateView(LoginRequiredMixin, generic.CreateView):
     model = Cook
     form_class = CookCreationForm
-    success_url = reverse_lazy("kitchen_board:cook_list")
+    success_url = reverse_lazy("kitchen_board:cook_detail")
 
 
 class CookPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Cook
     form_class = CookPositionUpdateForm
     success_url = reverse_lazy(
-        "kitchen_board:cook_list"
+        "kitchen_board:cook_detail"
     )
 
 
