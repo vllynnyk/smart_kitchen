@@ -11,6 +11,9 @@ from kitchen_board.views import (
     IngredientUpdateView,
     IngredientDeleteView,
     DishListView,
+    DishCreateView,
+    DishUpdateView,
+    DishDeleteView,
     CookListView
 )
 
@@ -19,7 +22,7 @@ app_name = "kitchen_board"
 
 urlpatterns = [
     path("", index, name="index"),
-    #DishType URLs
+#DishType URLs
     path(
         "dish_types/",
          DishTypeListView.as_view(),
@@ -40,7 +43,7 @@ urlpatterns = [
         DishTypeDeleteView.as_view(),
         name="dish_type_delete"
     ),
-    #Ingredient URLs
+#Ingredient URLs
     path(
         "ingredients/",
         IngredientListView.as_view(),
@@ -61,12 +64,26 @@ urlpatterns = [
         IngredientDeleteView.as_view(),
         name="ingredient_delete"
     ),
-    #Dish URLs
+#Dish URLs
     path("dishes/",
          DishListView.as_view(),
          name="dish_list"
          ),
-    #Cook URLs
+    path(
+        "dishes/create/",
+         DishCreateView.as_view(),
+         name="dish_create"),
+    path(
+        "dishes/<int:pk>/update/",
+         DishUpdateView.as_view(),
+         name="dish_update"
+    ),
+    path(
+        "dishes/<int:pk>/delete/",
+         DishDeleteView.as_view(),
+         name="dish_delete"
+    ),
+#Cook URLs
     path(
         "cooks/",
         CookListView.as_view(),
