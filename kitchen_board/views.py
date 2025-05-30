@@ -55,6 +55,13 @@ class DishTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "kitchen_board/dish_type_form.html"
 
 
+class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = DishType
+    context_object_name = "dish_type"
+    success_url = reverse_lazy("kitchen_board:dish_type_list")
+    template_name = "kitchen_board/dish_type_confirm_delete.html"
+
+
 #Ingredient
 class IngredientListView(LoginRequiredMixin, generic.ListView):
     model = Ingredient
