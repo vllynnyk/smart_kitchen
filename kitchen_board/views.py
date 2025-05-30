@@ -128,3 +128,10 @@ class CookPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy(
         "kitchen_board:cook_list"
     )
+
+
+class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Cook
+    success_url = reverse_lazy(
+        "kitchen_board:cook_list"
+    )
