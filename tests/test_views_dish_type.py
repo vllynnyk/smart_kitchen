@@ -28,3 +28,8 @@ class PrivateDishTypeTest(TestCase):
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
+
+    def test_uses_correct_context(self):
+        response = self.client.get(DISH_TYPES_URL)
+        self.assertTemplateUsed(response, "kitchen_board/dish_type_list.html")
+        self.assertIn("search_form", response.context)
