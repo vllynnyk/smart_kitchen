@@ -47,3 +47,13 @@ class PrivateDishTypeTest(TestCase):
         self.assertNotContains(response, "Pizza")
         self.assertContains(response, "Soups")
         self.assertNotContains(response, "Salads")
+
+    def test_search_with_no_match(self):
+        response = self.client.get(DISH_TYPES_URL, {"name": "sen"})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Pizza")
+        self.assertNotContains(response, "Soups")
+        self.assertNotContains(response, "Salads")
+        self.assertContains(response,
+                            "There are no dish types on the Kitchen Board.",
+                            html=True)
