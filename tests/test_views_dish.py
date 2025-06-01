@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from kitchen_board.models import Dish
+from kitchen_board.models import Dish, DishType, Ingredient
 
 DISH_URL = reverse("kitchen_board:dish_list")
 
@@ -22,9 +22,22 @@ class PrivateDishTest(TestCase):
             username="user1",
             password="1234pass",
         )
-        Dish.objects.create(name="Margarita")
-        Dish.objects.create(name="Curry")
-        Dish.objects.create(name="Sushi")
+        dish_type = DishType.objects.create(name="Pizza")
+        Dish.objects.create(
+            name="Margarita",
+            price=100,
+            dish_type=dish_type,
+        )
+        Dish.objects.create(
+            name="Curry",
+            price=100,
+            dish_type=dish_type,
+        )
+        Dish.objects.create(
+            name="Sushi",
+            price=100,
+            dish_type=dish_type,
+        )
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
