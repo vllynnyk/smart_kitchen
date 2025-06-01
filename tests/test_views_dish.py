@@ -40,3 +40,10 @@ class PrivateDishTest(TestCase):
         self.assertContains(response, "Margarita")
         self.assertContains(response, "Curry")
         self.assertContains(response, "Sushi")
+
+    def test_list_dish_type_search_by_name(self):
+        response = self.client.get(DISH_URL, {"name": "cu"})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Margarita")
+        self.assertContains(response, "Curry")
+        self.assertNotContains(response, "Sushi")
