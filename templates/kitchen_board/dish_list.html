@@ -9,6 +9,13 @@
     </a>
   </h1>
 
+  <form method="GET" action="">
+      {{ search_form|crispy }}
+      <input type="submit" class="btn btn-secondary" value="🔍">
+    </form>
+    <br>
+
+
   {% if dish_list %}
     <table class="table">
       <tr>
