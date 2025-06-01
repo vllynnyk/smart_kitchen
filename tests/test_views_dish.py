@@ -33,3 +33,10 @@ class PrivateDishTest(TestCase):
         response = self.client.get(DISH_URL)
         self.assertTemplateUsed(response, "kitchen_board/dish_list.html")
         self.assertIn("search_form", response.context)
+
+    def test_list_dish_type(self):
+        response = self.client.get(DISH_URL)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Margarita")
+        self.assertContains(response, "Curry")
+        self.assertContains(response, "Sushi")
