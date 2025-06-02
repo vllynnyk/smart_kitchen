@@ -75,3 +75,65 @@ class PrivateCookTest(TestCase):
         self.assertContains(response,
                             "There are no cooks on the Kitchen Board.",
                             html=True)
+
+    def test_create_cook(self):
+        response = self.client.post(
+            reverse("kitchen_board:cook_create"),
+            {
+                "username": "Valkyrie",
+                "password1": "1234pass",
+                "password2": "1234pass",
+                "first_name": "Janny",
+                "last_name": "Johnson",
+                "position": "saucier",
+                "years_of_experience": 9,
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response,COOK_URL)
+        exists = Cook.objects.filter(username="Valkyrie").exists()
+        self.assertTrue(exists)
+
+    def test_update_cook(self):
+        cook = Cook.objects.get(username="God")
+        response = self.client.post(
+            reverse(
+                "kitchen_board:cook_update",
+                kwargs={"pk": cook.pk}
+            ),
+            {
+                "position": "pastry_chef",
+                "years_of_experience": 15
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, COOK_URL)
+        cook.refresh_from_db()
+        self.assertEqual(cook.position, "pastry_chef")
+        self.assertEqual(cook.years_of_experience, 15)
+
+    def test_delete_cook(self):
+        cook = Cook.objects.get(username="Devil")
+        response = self.client.post(
+            reverse(
+                "kitchen_board:cook_delete",
+                kwargs={"pk": cook.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, COOK_URL)
+        exists = Cook.objects.filter(username="Devil").exists()
+        self.assertFalse(exists)
+
+    def test_detail_cook(self):
+        cook = Cook.objects.get(username="Angel")
+        response = self.client.get(
+            reverse(
+                "kitchen_board:cook_detail",
+                kwargs={"pk": cook.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response,cook.username)
+        self.assertTemplateUsed(response, "kitchen_board/cook_detail.html")
+        self.assertEqual(response.context["cook"], cook)
