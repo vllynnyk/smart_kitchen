@@ -28,3 +28,8 @@ class PrivateIngredientTest(TestCase):
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
+
+    def test_uses_correct_context(self):
+        response = self.client.get(INGREDIENT_URL)
+        self.assertTemplateUsed(response, "kitchen_board/ingredient.html")
+        self.assertIn("search_form", response.context)
