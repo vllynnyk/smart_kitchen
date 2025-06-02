@@ -65,3 +65,13 @@ class PrivateCookTest(TestCase):
         self.assertNotContains(response, "God")
         self.assertContains(response, "Devil")
         self.assertNotContains(response, "Angel")
+
+    def test_search_with_no_match(self):
+        response = self.client.get(COOK_URL, {"username": "ma"})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "God")
+        self.assertNotContains(response, "Devil")
+        self.assertNotContains(response, "Angel")
+        self.assertContains(response,
+                            "There are no cooks on the Kitchen Board.",
+                            html=True)
