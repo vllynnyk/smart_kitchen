@@ -3,7 +3,7 @@
 {% block content %}
   <h1>{{ dish_type.name }}</h1>
 
-  {% if dish_type.dishes.exists %}
+  {% if dish_type.dishes.all %}
     <table class="table">
       <tr>
         <th>ID</th>
@@ -12,7 +12,11 @@
       {% for dish in dish_type.dishes.all %}
         <tr>
           <td>{{ dish.id }}</td>
-          <td>{{ dish.name }}</td>
+          <td>
+            <a href="{{ dish.get_absolute_url }}">
+              {{ dish.name }}
+            </a>
+          </td>
         </tr>
       {% endfor %}
     </table>
