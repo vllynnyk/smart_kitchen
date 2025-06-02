@@ -3,7 +3,7 @@
 
 {% block content %}
   <h1>
-    Dish Type List
+    Dish Types
     <a href="{% url 'kitchen_board:dish_type_create' %}" class="btn btn-primary link-to-page">
       Add Dish Type
     </a>
@@ -30,7 +30,7 @@
               {{ dish_type.id }}
           </td>
           <td>
-              <a href="#">
+              <a href="{% url 'kitchen_board:dish_type_detail' dish_type.id %}">
                 {{ dish_type.name }}
               </a>
           </td>
