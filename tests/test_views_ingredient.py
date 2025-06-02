@@ -33,3 +33,10 @@ class PrivateIngredientTest(TestCase):
         response = self.client.get(INGREDIENT_URL)
         self.assertTemplateUsed(response, "kitchen_board/ingredient.html")
         self.assertIn("search_form", response.context)
+
+    def test_list_ingredient(self):
+        response = self.client.get(INGREDIENT_URL)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Apple")
+        self.assertContains(response, "Tomato")
+        self.assertContains(response, "Cheese")
