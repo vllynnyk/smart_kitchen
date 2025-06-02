@@ -57,3 +57,54 @@ class PrivateIngredientTest(TestCase):
         self.assertContains(response,
                             "There are no ingredients on the Kitchen Board.",
                             html=True)
+
+    def test_create_ingredient(self):
+        response = self.client.post(
+            reverse("kitchen_board:ingredient_create"),
+            {"name": "Banana"}
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response,INGREDIENT_URL)
+        exists = Ingredient.objects.filter(name="Banana").exists()
+        self.assertTrue(exists)
+
+    def test_update_ingredient(self):
+        ingredient = Ingredient.objects.get(name="Cheese")
+        response = self.client.post(reverse(
+            "kitchen_board:ingredient_update",
+            kwargs={"pk": ingredient.pk}
+        ),
+            {"name": "Banana"})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, INGREDIENT_URL)
+        exists = Ingredient.objects.filter(name="Banana").exists()
+        self.assertTrue(exists)
+
+    def test_delete_ingredient(self):
+        ingredient = Ingredient.objects.get(name="Cheese")
+        response = self.client.post(
+            reverse(
+                "kitchen_board:ingredient_delete",
+                kwargs={"pk": ingredient.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, INGREDIENT_URL)
+        exists = Ingredient.objects.filter(name="Cheese").exists()
+        self.assertFalse(exists)
+
+    def test_detail_ingredient(self):
+        ingredient = Ingredient.objects.get(name="Tomato")
+        response = self.client.get(
+            reverse(
+                "kitchen_board:ingredient_detail",
+                kwargs={"pk": ingredient.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response,ingredient.name)
+        self.assertTemplateUsed(
+            response,
+            "kitchen_board/ingredient_detail.html"
+        )
+        self.assertEqual(response.context["ingredient"], ingredient)
