@@ -57,3 +57,48 @@ class PrivateDishTypeTest(TestCase):
         self.assertContains(response,
                             "There are no dish types on the Kitchen Board.",
                             html=True)
+
+    def test_create_dish_type(self):
+        response = self.client.post(reverse("kitchen_board:dish_type_create"),{"name": "Appetizers"})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response,DISH_TYPES_URL)
+        exists = DishType.objects.filter(name="Appetizers").exists()
+        self.assertTrue(exists)
+
+    def test_update_dish_type(self):
+        dish_type = DishType.objects.get(name="Pizza")
+        response = self.client.post(reverse(
+            "kitchen_board:dish_type_update",
+            kwargs={"pk": dish_type.pk}
+        ),
+            {"name": "Starters"})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, DISH_TYPES_URL)
+        exists = DishType.objects.filter(name="Starters").exists()
+        self.assertTrue(exists)
+
+    def test_delete_dish_type(self):
+        dish_type = DishType.objects.get(name="Pizza")
+        response = self.client.post(
+            reverse(
+                "kitchen_board:dish_type_delete",
+                kwargs={"pk": dish_type.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, DISH_TYPES_URL)
+        exists = DishType.objects.filter(name="Pizza").exists()
+        self.assertFalse(exists)
+
+    def test_detail_dish_type(self):
+        dish_type = DishType.objects.get(name="Salads")
+        response = self.client.get(
+            reverse(
+                "kitchen_board:dish_type_detail",
+                kwargs={"pk": dish_type.pk}
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response,dish_type.name)
+        self.assertTemplateUsed(response, "kitchen_board/dish_type_detail.html")
+        self.assertEqual(response.context["dish_type"], dish_type)
