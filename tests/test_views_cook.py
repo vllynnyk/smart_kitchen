@@ -51,3 +51,10 @@ class PrivateCookTest(TestCase):
         response = self.client.get(COOK_URL)
         self.assertTemplateUsed(response, "kitchen_board/cook_list.html")
         self.assertIn("search_form", response.context)
+
+    def test_list_cook(self):
+        response = self.client.get(COOK_URL)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "God")
+        self.assertContains(response, "Devil")
+        self.assertContains(response, "Angel")
