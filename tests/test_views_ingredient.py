@@ -47,3 +47,13 @@ class PrivateIngredientTest(TestCase):
         self.assertContains(response, "Apple")
         self.assertNotContains(response, "Tomato")
         self.assertNotContains(response, "Cheese")
+
+    def test_search_with_no_match(self):
+        response = self.client.get(INGREDIENT_URL, {"name": "bi"})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Apple")
+        self.assertNotContains(response, "Tomato")
+        self.assertNotContains(response, "Cheese")
+        self.assertContains(response,
+                            "There are no ingredients on the Kitchen Board.",
+                            html=True)
