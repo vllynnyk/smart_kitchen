@@ -40,3 +40,10 @@ class PrivateIngredientTest(TestCase):
         self.assertContains(response, "Apple")
         self.assertContains(response, "Tomato")
         self.assertContains(response, "Cheese")
+
+    def test_list_ingredient_search_by_name(self):
+        response = self.client.get(INGREDIENT_URL, {"name": "pp"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Apple")
+        self.assertNotContains(response, "Tomato")
+        self.assertNotContains(response, "Cheese")
