@@ -17,6 +17,7 @@ from kitchen_board.views import (
     DishCreateView,
     DishUpdateView,
     DishDeleteView,
+    toggle_assign_to_dish,
     CookListView,
     CookDetailView,
     CookCreateView,
@@ -104,6 +105,11 @@ urlpatterns = [
         "dishes/<int:pk>/delete/",
          DishDeleteView.as_view(),
          name="dish_delete"
+    ),
+    path(
+        "dishes/<int:pk>/toggle-assign/",
+        toggle_assign_to_dish,
+        name="toggle_dish_assign",
     ),
 #Cook URLs
     path(
