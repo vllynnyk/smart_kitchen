@@ -3,7 +3,7 @@
 
 {% block content %}
   <h1>
-    Ingredient List
+    Ingredients
     <a href="{% url 'kitchen_board:ingredient_create' %}" class="btn btn-primary link-to-page">
       Add Ingredient
     </a>
@@ -31,7 +31,7 @@
               {{ ingredient.id }}
           </td>
           <td>
-            <a href="#">
+            <a href="{% url 'kitchen_board:ingredient_detail' ingredient.id %}">
               {{ ingredient.name }}
             </a>
           </td>
