@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 
 from smart_kitchen import settings
 
@@ -43,6 +44,9 @@ class Cook(AbstractUser):
         valid_position = [choice[0] for choice in self.POSITION_CHOICES]
         if self.position not in valid_position:
             raise ValidationError("Invalid position selected")
+
+    def get_absolute_url(self):
+        return reverse("kitchen_board:cook_detail", kwargs={"pk": self.pk})
 
 
 class Ingredient(models.Model):
