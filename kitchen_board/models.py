@@ -75,3 +75,7 @@ class Dish(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.price} {self.dish_type.name}"
+
+
+    def get_absolute_url(self):
+        return reverse("kitchen_board:dish_detail", kwargs={"pk": self.pk})
