@@ -3,11 +3,11 @@
 {% block content %}
   <h1>
     Username: {{ cook.username }}
-    <a href="{% url 'kitchen_board:cook_delete' pk=cook.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
     <a href="{% url 'kitchen_board:cook_update' pk=cook.id %}" class="btn btn-secondary link-to-page">
       Update position or experience
+    </a>
+    <a href="{% url 'kitchen_board:cook_delete' pk=cook.id %}" class="btn btn-danger link-to-page">
+      Delete
     </a>
   </h1>
 
@@ -21,7 +21,7 @@
 
   <div>
     <h4>Dishes</h4>
-    {% if cook.dishes.exist %}
+    {% if cook.dishes.all %}
       <table class="table">
         <tr>
           <th>ID</th>
@@ -32,7 +32,7 @@
           <tr>
             <td>{{ dish.id }}</td>
             <td>
-              <a href="{% url 'kitchen_board:dish_detail' dish.id %}">
+              <a href="{{ dish.get_absolute_url }}">
                 {{ dish.name }}
               </a>
             </td>
