@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
+from django.urls import reverse
 
 
 class AdminSiteTest(TestCase):
@@ -16,3 +17,9 @@ class AdminSiteTest(TestCase):
             position="head_chef",
             years_of_experience=2
         )
+
+    def test_admin_available_for_is_staff(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("admin:index"))
+        self.assertTrue(self.user.is_staff)
+        self.assertEqual(response.status_code, 200)
