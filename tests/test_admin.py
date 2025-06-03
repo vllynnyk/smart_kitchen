@@ -45,3 +45,21 @@ class AdminSiteTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.cook.get_position_display())
         self.assertContains(response, self.cook.years_of_experience)
+
+    def test_create_cook_via_admin(self):
+        self.client.force_login(self.user)
+        url = reverse("admin:kitchen_board_cook_add")
+        data = {
+            "username": "God",
+            "password1": "1234pass",
+            "password2": "1234pass",
+            "first_name": "John",
+            "last_name": "Smith",
+            "position": "head_chef",
+            "years_of_experience": 10,
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+        new_cook = get_user_model().objects.get("God")
+        self.assertEqual(new_cook.position, "head_chef")
+        self.assertEqual(new_cook.years_of_experience, 10)
