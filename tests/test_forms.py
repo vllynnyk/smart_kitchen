@@ -110,3 +110,8 @@ class BaseSearchFormTest(TestCase):
         form = self.form_class(data={})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data[self.field_name], '')
+
+    def test_form_with_value_is_valid(self):
+        form = self.form_class(data={self.field_name: self.test_value})
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data[self.field_name], self.test_value)
