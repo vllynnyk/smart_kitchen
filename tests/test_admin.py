@@ -63,3 +63,21 @@ class AdminSiteTest(TestCase):
         new_cook = get_user_model().objects.get("God")
         self.assertEqual(new_cook.position, "head_chef")
         self.assertEqual(new_cook.years_of_experience, 10)
+
+    def test_update_cook_position_via_admin(self):
+        self.client.force_login(self.user)
+        url = reverse("admin:kitchen_board_cook_change", args=[self.cook.id])
+        data = {
+            "username": self.cook.username,
+            "date_joined_0": self.cook.date_joined.strftime("%Y-%m-%d"),
+            "date_joined_1": self.cook.date_joined.strftime("%H:%M:%S"),
+            "position": "pastry_chef",
+            "years_of_experience": 8,
+        }
+        response = self.client.post(url, data)
+        if response.status_code != 302:
+            print(response.content.decode())
+        self.assertEqual(response.status_code, 302)
+        self.cook.refresh_from_db()
+        self.assertEqual(self.cook.position, "pastry_chef")
+        self.assertEqual(self.cook.years_of_experience, 8)
