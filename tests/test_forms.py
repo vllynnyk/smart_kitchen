@@ -115,3 +115,10 @@ class BaseSearchFormTest(TestCase):
         form = self.form_class(data={self.field_name: self.test_value})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data[self.field_name], self.test_value)
+
+    def test_form_with_too_long_value_is_invalid(self):
+        too_long_value = "a" * 101
+        form = self.form_class(data={self.field_name: too_long_value})
+        self.assertFalse(form.is_valid())
+        self.assertIn(self.field_name, form.errors)
+
