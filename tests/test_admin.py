@@ -23,3 +23,9 @@ class AdminSiteTest(TestCase):
         response = self.client.get(reverse("admin:index"))
         self.assertTrue(self.user.is_staff)
         self.assertEqual(response.status_code, 200)
+
+    def test_admin_available_for_is_not_staff(self):
+        self.client.force_login(self.cook)
+        response = self.client.get(reverse("admin:index"))
+        self.assertFalse(self.cook.is_staff)
+        self.assertNotEqual(response.status_code, 200)
