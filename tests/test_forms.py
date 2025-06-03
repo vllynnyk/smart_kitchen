@@ -39,3 +39,30 @@ class FormsTests(TestCase):
         self.dish_type = DishType.objects.create(
             name="Pizza",
         )
+
+    def test_cook_creation_form(self):
+        form_data = {
+            "username": "God",
+            "password1": "1234pass",
+            "password2": "1234pass",
+            "first_name": "John",
+            "last_name": "Johnson",
+            "position": "pastry_chef",
+            "years_of_experience": 10,
+        }
+        form = CookCreationForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data["username"],
+                         form_data["username"])
+        self.assertEqual(form.cleaned_data["first_name"],
+                         form_data["first_name"])
+        self.assertEqual(form.cleaned_data["last_name"],
+                         form_data["last_name"])
+        self.assertEqual(
+            form.cleaned_data["position"],
+            form_data["position"]
+        )
+        self.assertEqual(
+            form.cleaned_data["years_of_experience"],
+            form_data["years_of_experience"]
+        )
