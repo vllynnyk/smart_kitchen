@@ -37,3 +37,11 @@ class AdminSiteTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.cook.get_position_display())
         self.assertContains(response, self.cook.years_of_experience)
+
+    def test_cook_additional_fields_admin(self):
+        self.client.force_login(self.user)
+        url = reverse("kitchen_board:cook_detail", args=[self.cook.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.cook.get_position_display())
+        self.assertContains(response, self.cook.years_of_experience)
