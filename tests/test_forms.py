@@ -76,3 +76,26 @@ class FormsTests(TestCase):
             self.assertTrue(form.is_valid())
             self.assertEqual(form.cleaned_data["position"], form_data["position"])
             self.assertEqual(form.cleaned_data["years_of_experience"], form_data["years_of_experience"])
+
+    def test_dish_form(self):
+        form_data = {
+            "name": "Margarita",
+            "description": "Delicious pizza",
+            "price": 17.80,
+            "dish_type": self.dish_type.id,
+            "ingredients": [self.ingredient1.id, self.ingredient2.id],
+            "cooks": [self.cook1.id, self.cook2.id],
+        }
+        form = DishForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        dish = form.save()
+        self.assertEqual(dish.name, form_data["name"])
+        self.assertEqual(dish.dish_type, self.dish_type)
+        self.assertCountEqual(
+            list(dish.ingredients.all()),
+            [self.ingredient1, self.ingredient2]
+        )
+        self.assertCountEqual(
+            list(dish.cooks.all()),
+            [self.cook1, self.cook2]
+        )
