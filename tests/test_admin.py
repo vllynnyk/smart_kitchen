@@ -29,3 +29,11 @@ class AdminSiteTest(TestCase):
         response = self.client.get(reverse("admin:index"))
         self.assertFalse(self.cook.is_staff)
         self.assertNotEqual(response.status_code, 200)
+
+    def test_cook_additional_fields(self):
+        self.client.force_login(self.user)
+        url = reverse("kitchen_board:cook_list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.cook.get_position_display())
+        self.assertContains(response, self.cook.years_of_experience)
