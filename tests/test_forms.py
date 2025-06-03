@@ -122,3 +122,26 @@ class BaseSearchFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn(self.field_name, form.errors)
 
+
+class CookSearchFormTest(BaseSearchFormTest):
+    form_class = CookSearchForm
+    field_name = "username"
+    test_value = "Angel"
+
+
+class DishTypeSearchFormTest(BaseSearchFormTest):
+    form_class = DishTypeSearchForm
+    field_name = "name"
+    test_value = "Pizza"
+
+
+class IngredientSearchFormTest(BaseSearchFormTest):
+    form_class = IngredientSearchForm
+    field_name = "name"
+    test_value = "Apple"
+
+
+class DishSearchFormTest(BaseSearchFormTest):
+    form_class = DishSearchForm
+    field_name = "name"
+    test_value = "Margarita"
