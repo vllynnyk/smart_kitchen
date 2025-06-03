@@ -99,3 +99,14 @@ class FormsTests(TestCase):
             list(dish.cooks.all()),
             [self.cook1, self.cook2]
         )
+
+
+class BaseSearchFormTest(TestCase):
+    form_class = None
+    field_name = None
+    test_value = None
+
+    def test_empty_form_is_valid(self):
+        form = self.form_class(data={})
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data[self.field_name], '')
