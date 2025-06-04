@@ -76,7 +76,6 @@ class PrivateCookTest(TestCase):
                             "There are no cooks on the Kitchen Board.",
                             html=True)
 
-
     def test_create_cook(self):
         form_data = {
             "username": "Valkyrie",
@@ -143,6 +142,6 @@ class PrivateCookTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response,cook.username)
+        self.assertContains(response, cook.username)
         self.assertTemplateUsed(response, "kitchen_board/cook_detail.html")
         self.assertEqual(response.context["cook"], cook)
