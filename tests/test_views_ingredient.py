@@ -22,16 +22,25 @@ class PrivateIngredientTest(TestCase):
             username="user1",
             password="1234pass",
         )
-        Ingredient.objects.create(name="Apple")
-        Ingredient.objects.create(name="Tomato")
-        Ingredient.objects.create(name="Cheese")
+        Ingredient.objects.create(
+            name="Apple",
+            stock_count=10
+        )
+        Ingredient.objects.create(
+            name="Tomato",
+            stock_count=8
+        )
+        Ingredient.objects.create(
+            name="Cheese",
+            stock_count=6
+        )
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
 
     def test_uses_correct_context(self):
         response = self.client.get(INGREDIENT_URL)
-        self.assertTemplateUsed(response, "kitchen_board/ingredient.html")
+        self.assertTemplateUsed(response, "kitchen_board/ingredient_list.html")
         self.assertIn("search_form", response.context)
 
     def test_list_ingredient(self):
@@ -61,7 +70,10 @@ class PrivateIngredientTest(TestCase):
     def test_create_ingredient(self):
         response = self.client.post(
             reverse("kitchen_board:ingredient_create"),
-            {"name": "Banana"}
+            {
+                "name": "Banana",
+                "stock_count": 10
+            }
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response,INGREDIENT_URL)
@@ -74,7 +86,7 @@ class PrivateIngredientTest(TestCase):
             "kitchen_board:ingredient_update",
             kwargs={"pk": ingredient.pk}
         ),
-            {"name": "Banana"})
+            {"name": "Banana", "stock_count": 12})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, INGREDIENT_URL)
         exists = Ingredient.objects.filter(name="Banana").exists()
