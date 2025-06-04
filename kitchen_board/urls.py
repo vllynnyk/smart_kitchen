@@ -30,16 +30,15 @@ app_name = "kitchen_board"
 
 urlpatterns = [
     path("", index, name="index"),
-#DishType URLs
     path(
         "dish_types/",
-         DishTypeListView.as_view(),
-         name="dish_type_list"
+        DishTypeListView.as_view(),
+        name="dish_type_list"
     ),
     path(
         "dish_types/<int:pk>/",
-         DishTypeDetailView.as_view(),
-         name="dish_type_detail"
+        DishTypeDetailView.as_view(),
+        name="dish_type_detail"
     ),
     path(
         "dish_types/create/",
@@ -56,7 +55,6 @@ urlpatterns = [
         DishTypeDeleteView.as_view(),
         name="dish_type_delete"
     ),
-#Ingredient URLs
     path(
         "ingredients/",
         IngredientListView.as_view(),
@@ -82,7 +80,6 @@ urlpatterns = [
         IngredientDeleteView.as_view(),
         name="ingredient_delete"
     ),
-#Dish URLs
     path("dishes/",
          DishListView.as_view(),
          name="dish_list"
@@ -94,24 +91,23 @@ urlpatterns = [
     ),
     path(
         "dishes/create/",
-         DishCreateView.as_view(),
-         name="dish_create"),
+        DishCreateView.as_view(),
+        name="dish_create"),
     path(
         "dishes/<int:pk>/update/",
-         DishUpdateView.as_view(),
-         name="dish_update"
+        DishUpdateView.as_view(),
+        name="dish_update"
     ),
     path(
         "dishes/<int:pk>/delete/",
-         DishDeleteView.as_view(),
-         name="dish_delete"
+        DishDeleteView.as_view(),
+        name="dish_delete"
     ),
     path(
         "dishes/<int:pk>/toggle-assign/",
         toggle_assign_to_dish,
         name="toggle_dish_assign",
     ),
-#Cook URLs
     path(
         "cooks/",
         CookListView.as_view(),
