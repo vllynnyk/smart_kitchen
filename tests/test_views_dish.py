@@ -22,21 +22,21 @@ class PrivateDishTest(TestCase):
             username="user1",
             password="1234pass",
         )
-        dish_type = DishType.objects.create(name="Pizza")
+        cls.dish_type = DishType.objects.create(name="Pizza")
         Dish.objects.create(
             name="Margarita",
             price=100,
-            dish_type=dish_type,
+            dish_type=cls.dish_type,
         )
         Dish.objects.create(
             name="Curry",
             price=100,
-            dish_type=dish_type,
+            dish_type=cls.dish_type,
         )
         Dish.objects.create(
             name="Sushi",
             price=100,
-            dish_type=dish_type,
+            dish_type=cls.dish_type,
         )
 
     def setUp(self) -> None:
@@ -47,14 +47,14 @@ class PrivateDishTest(TestCase):
         self.assertTemplateUsed(response, "kitchen_board/dish_list.html")
         self.assertIn("search_form", response.context)
 
-    def test_list_dish_type(self):
+    def test_list_dish(self):
         response = self.client.get(DISH_URL)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Margarita")
         self.assertContains(response, "Curry")
         self.assertContains(response, "Sushi")
 
-    def test_list_dish_type_search_by_name(self):
+    def test_list_dish_search_by_name(self):
         response = self.client.get(DISH_URL, {"name": "cu"})
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Margarita")
@@ -72,7 +72,22 @@ class PrivateDishTest(TestCase):
                             html=True)
 
     def test_create_dish(self):
-        response = self.client.post(reverse("kitchen_board:dish_create"),{"name": "Meatballs"})
+        cheese = Ingredient.objects.create(name="Cheese", stock_count=12)
+        tomato = Ingredient.objects.create(name="Tomato",stock_count=8)
+        data_form = {
+            "name": "Meatballs",
+            "price": 10,
+            "dish_type": self.dish_type.id,
+            "ingredients": [
+                cheese.id,
+                tomato.id,
+            ],
+            "cooks": self.user.id,
+        }
+        response = self.client.post(
+            reverse("kitchen_board:dish_create"),
+            data=data_form,
+        )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response,DISH_URL)
         exists = Dish.objects.filter(name="Meatballs").exists()
@@ -80,16 +95,29 @@ class PrivateDishTest(TestCase):
 
     def test_update_dish(self):
         dish = Dish.objects.get(name="Curry")
+        cheese = Ingredient.objects.create(name="Cheese", stock_count=11)
+        tomato = Ingredient.objects.create(name="Tomato", stock_count=8)
+        data_form = {
+            "name": "Meatballs",
+            "price": 10,
+            "dish_type": self.dish_type.id,
+            "ingredients": [
+                cheese.id,
+                tomato.id,
+            ],
+            "cooks": self.user.id,
+        }
         response = self.client.post(reverse(
             "kitchen_board:dish_update",
             kwargs={"pk": dish.pk}
-        ),
-            {"name": "Meatballs"})
+        ), data=data_form,)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, DISH_URL)
+        self.assertRedirects(response, reverse(
+            "kitchen_board:dish_detail",
+            kwargs={"pk": dish.pk}
+        ))
         exists = Dish.objects.filter(name="Meatballs").exists()
         self.assertTrue(exists)
-
     def test_delete_dish(self):
         dish = Dish.objects.get(name="Sushi")
         response = self.client.post(
