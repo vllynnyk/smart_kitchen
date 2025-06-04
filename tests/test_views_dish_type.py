@@ -59,9 +59,12 @@ class PrivateDishTypeTest(TestCase):
                             html=True)
 
     def test_create_dish_type(self):
-        response = self.client.post(reverse("kitchen_board:dish_type_create"),{"name": "Appetizers"})
+        response = self.client.post(
+            reverse("kitchen_board:dish_type_create"),
+            {"name": "Appetizers"}
+        )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response,DISH_TYPES_URL)
+        self.assertRedirects(response, DISH_TYPES_URL)
         exists = DishType.objects.filter(name="Appetizers").exists()
         self.assertTrue(exists)
 
@@ -99,6 +102,9 @@ class PrivateDishTypeTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response,dish_type.name)
-        self.assertTemplateUsed(response, "kitchen_board/dish_type_detail.html")
+        self.assertContains(response, dish_type.name)
+        self.assertTemplateUsed(
+            response,
+            "kitchen_board/dish_type_detail.html"
+        )
         self.assertEqual(response.context["dish_type"], dish_type)
