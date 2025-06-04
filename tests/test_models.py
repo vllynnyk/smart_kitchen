@@ -13,7 +13,8 @@ class DishTypeTest(TestCase):
 
     def test_dish_type_ordering(self):
         """
-        Test that DishType objects are ordered alphabetically by their 'name' field.
+        Test that DishType objects are ordered alphabetically
+        by their 'name' field.
         """
         DishType.objects.create(name="Soups")
         DishType.objects.create(name="Pizza")
@@ -29,7 +30,7 @@ class CookTest(TestCase):
             first_name="John",
             last_name="Jones",
             password="1234pass",
-            position = "head_chef",
+            position="head_chef",
             years_of_experience=5,
         )
 
@@ -38,7 +39,6 @@ class CookTest(TestCase):
         self.assertEqual(str(cook),
                          f"{cook.username}"
                          f" ({cook.first_name} {cook.last_name})")
-
 
     def test_cook_creation(self):
         self.assertEqual(self.cook.position, "head_chef")
@@ -76,16 +76,16 @@ class IngredientTest(TestCase):
                          f"{ingredient.name} ({ingredient.stock_count})")
 
     def test_ingredient_ordering(self):
-            Ingredient.objects.create(
-                name="Banana",
-                stock_count=5,
-            )
-            Ingredient.objects.create(
-                name="Apple",
-                stock_count=10,
-            )
-            all_ingredients = Ingredient.objects.all()
-            self.assertEqual(all_ingredients[0].name, "Apple")
+        Ingredient.objects.create(
+            name="Banana",
+            stock_count=5,
+        )
+        Ingredient.objects.create(
+            name="Apple",
+            stock_count=10,
+        )
+        all_ingredients = Ingredient.objects.all()
+        self.assertEqual(all_ingredients[0].name, "Apple")
 
 
 class DishTest(TestCase):
