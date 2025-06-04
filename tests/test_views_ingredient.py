@@ -76,7 +76,7 @@ class PrivateIngredientTest(TestCase):
             }
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response,INGREDIENT_URL)
+        self.assertRedirects(response, INGREDIENT_URL)
         exists = Ingredient.objects.filter(name="Banana").exists()
         self.assertTrue(exists)
 
@@ -114,7 +114,7 @@ class PrivateIngredientTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response,ingredient.name)
+        self.assertContains(response, ingredient.name)
         self.assertTemplateUsed(
             response,
             "kitchen_board/ingredient_detail.html"
