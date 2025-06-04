@@ -35,7 +35,7 @@ class AdminSiteTest(TestCase):
         url = reverse("kitchen_board:cook_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.cook.get_position_display())
+        self.assertContains(response, self.cook.position)
         self.assertContains(response, self.cook.years_of_experience)
 
     def test_cook_additional_fields_admin(self):
@@ -43,7 +43,7 @@ class AdminSiteTest(TestCase):
         url = reverse("kitchen_board:cook_detail", args=[self.cook.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.cook.get_position_display())
+        self.assertContains(response, self.cook.position)
         self.assertContains(response, self.cook.years_of_experience)
 
     def test_create_cook_via_admin(self):
@@ -60,7 +60,7 @@ class AdminSiteTest(TestCase):
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
-        new_cook = get_user_model().objects.get("God")
+        new_cook = get_user_model().objects.get(username="God")
         self.assertEqual(new_cook.position, "head_chef")
         self.assertEqual(new_cook.years_of_experience, 10)
 
