@@ -73,7 +73,7 @@ class PrivateDishTest(TestCase):
 
     def test_create_dish(self):
         cheese = Ingredient.objects.create(name="Cheese", stock_count=12)
-        tomato = Ingredient.objects.create(name="Tomato",stock_count=8)
+        tomato = Ingredient.objects.create(name="Tomato", stock_count=8)
         data_form = {
             "name": "Meatballs",
             "price": 10,
@@ -89,7 +89,7 @@ class PrivateDishTest(TestCase):
             data=data_form,
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response,DISH_URL)
+        self.assertRedirects(response, DISH_URL)
         exists = Dish.objects.filter(name="Meatballs").exists()
         self.assertTrue(exists)
 
@@ -118,6 +118,7 @@ class PrivateDishTest(TestCase):
         ))
         exists = Dish.objects.filter(name="Meatballs").exists()
         self.assertTrue(exists)
+
     def test_delete_dish(self):
         dish = Dish.objects.get(name="Sushi")
         response = self.client.post(
@@ -140,6 +141,6 @@ class PrivateDishTest(TestCase):
             )
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response,dish.name)
+        self.assertContains(response, dish.name)
         self.assertTemplateUsed(response, "kitchen_board/dish_detail.html")
         self.assertEqual(response.context["dish"], dish)
