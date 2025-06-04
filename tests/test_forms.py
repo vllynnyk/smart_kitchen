@@ -22,7 +22,7 @@ class FormsTests(TestCase):
             years_of_experience=9
         )
         self.cook2 = Cook.objects.create(
-            username="Angel",
+            username="Devil",
             first_name="Bob",
             last_name="Smith",
             position="head_chef",
@@ -107,16 +107,22 @@ class BaseSearchFormTest(TestCase):
     test_value = None
 
     def test_empty_form_is_valid(self):
+        if self.form_class is None:
+            self.skipTest("Base class - skipping tests")
         form = self.form_class(data={})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data[self.field_name], '')
 
     def test_form_with_value_is_valid(self):
+        if self.form_class is None:
+            self.skipTest("Base class - skipping tests")
         form = self.form_class(data={self.field_name: self.test_value})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data[self.field_name], self.test_value)
 
     def test_form_with_too_long_value_is_invalid(self):
+        if self.form_class is None:
+            self.skipTest("Base class - skipping tests")
         too_long_value = "a" * 101
         form = self.form_class(data={self.field_name: too_long_value})
         self.assertFalse(form.is_valid())
