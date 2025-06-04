@@ -66,8 +66,14 @@ class Dish(models.Model):
     name = models.CharField(max_length=65, unique=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    dish_type = models.ForeignKey(DishType,related_name="dishes" ,on_delete=models.CASCADE)
-    cooks = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dishes")
+    dish_type = models.ForeignKey(
+        DishType,related_name="dishes",
+        on_delete=models.CASCADE
+    )
+    cooks = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="dishes"
+    )
     ingredients = models.ManyToManyField(Ingredient, related_name="dishes")
 
     class Meta:
@@ -75,7 +81,6 @@ class Dish(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.price} {self.dish_type.name}"
-
 
     def get_absolute_url(self):
         return reverse("kitchen_board:dish_detail", kwargs={"pk": self.pk})
