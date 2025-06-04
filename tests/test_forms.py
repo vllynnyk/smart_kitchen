@@ -68,14 +68,20 @@ class FormsTests(TestCase):
         )
 
     def test_cook_updating_form(self):
-            form_data = {
-                "position": "pastry_chef",
-                "years_of_experience": 10,
-            }
-            form = CookPositionUpdateForm(data=form_data, instance=self.cook1)
-            self.assertTrue(form.is_valid())
-            self.assertEqual(form.cleaned_data["position"], form_data["position"])
-            self.assertEqual(form.cleaned_data["years_of_experience"], form_data["years_of_experience"])
+        form_data = {
+            "position": "pastry_chef",
+            "years_of_experience": 10,
+        }
+        form = CookPositionUpdateForm(data=form_data, instance=self.cook1)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(
+            form.cleaned_data["position"],
+            form_data["position"]
+        )
+        self.assertEqual(
+            form.cleaned_data["years_of_experience"],
+            form_data["years_of_experience"]
+        )
 
     def test_dish_form(self):
         form_data = {
