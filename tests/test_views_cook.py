@@ -52,7 +52,7 @@ class PrivateCookTest(TestCase):
         self.assertTemplateUsed(response, "kitchen_board/cook_list.html")
         self.assertIn("search_form", response.context)
 
-    def test_list_cook(self):
+    def test_list_cook_type(self):
         response = self.client.get(COOK_URL)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "God")
@@ -76,21 +76,27 @@ class PrivateCookTest(TestCase):
                             "There are no cooks on the Kitchen Board.",
                             html=True)
 
+
     def test_create_cook(self):
+        form_data = {
+            "username": "Valkyrie",
+            "password1": "1234pass",
+            "password2": "1234pass",
+            "first_name": "Janny",
+            "last_name": "Johnson",
+            "position": "saucier",
+            "years_of_experience": 9,
+        }
         response = self.client.post(
             reverse("kitchen_board:cook_create"),
-            {
-                "username": "Valkyrie",
-                "password1": "1234pass",
-                "password2": "1234pass",
-                "first_name": "Janny",
-                "last_name": "Johnson",
-                "position": "saucier",
-                "years_of_experience": 9,
-            }
+            data=form_data,
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response,COOK_URL)
+        new_cook = Cook.objects.get(username="Valkyrie")
+        self.assertRedirects(response, reverse(
+            "kitchen_board:cook_detail",
+            kwargs={"pk": new_cook.pk})
+                             )
         exists = Cook.objects.filter(username="Valkyrie").exists()
         self.assertTrue(exists)
 
@@ -107,7 +113,10 @@ class PrivateCookTest(TestCase):
             }
         )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, COOK_URL)
+        self.assertRedirects(response,  reverse(
+            "kitchen_board:cook_detail",
+            kwargs={"pk": cook.pk})
+                             )
         cook.refresh_from_db()
         self.assertEqual(cook.position, "pastry_chef")
         self.assertEqual(cook.years_of_experience, 15)
@@ -125,7 +134,7 @@ class PrivateCookTest(TestCase):
         exists = Cook.objects.filter(username="Devil").exists()
         self.assertFalse(exists)
 
-    def test_detail_cook(self):
+    def test_detail_dish(self):
         cook = Cook.objects.get(username="Angel")
         response = self.client.get(
             reverse(
