@@ -1,63 +1,88 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    {{ dish.name }}
-    <a href="{% url 'kitchen_board:dish_update' dish.id%}"  class="btn btn-secondary link-to-page">
-      Update
-    </a>
-    <a href="{% url 'kitchen_board:dish_delete' dish.id%}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-  </h1>
 
-  <p><strong>Price:</strong> {{ dish.price }}</p>
-  <p><strong>Dish Type:</strong>
-    <a href="{% url 'kitchen_board:dish_type_detail' dish.dish_type.id %}">
-      {{ dish.dish_type }}
-    </a>
-  </p>
-  <p><strong>Description:</strong> {{ dish.description }}</p>
-  <p><strong>Ingredients:</strong>
-    {% for ingredient in dish.ingredients.all %}
-      <a href="{% url 'kitchen_board:ingredient_detail' ingredient.id %}">
-        {{ ingredient.name }}
-      </a>{% if not forloop.last %}, {% endif %}
-    {% endfor %}
-  </p>
-  <h3>
-    Cooks
-      {% if dish in user.dishes.all %}
-      <a href="{% url 'kitchen_board:toggle_dish_assign' pk=dish.id %}" class="btn btn-danger link-to-page">
-        Delete me from this dish
-      </a>
-    {% else %}
-      <a href="{% url 'kitchen_board:toggle_dish_assign' pk=dish.id %}" class="btn btn-success link-to-page">
-        Assign me to this dish
-      </a>
-    {% endif %}
+  <header>
+    <div class="page-header min-height-300" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png');" loading="lazy">
+      <span class="mask bg-gradient-dark opacity-8"></span>
+    </div>
+  </header>
 
-  </h3>
-  {% if dish.cooks.all %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Position</th>
-      </tr>
-      {% for cook in dish.cooks.all %}
-        <tr>
-          <td>{{ cook.id }}</td>
-          <td>
-            <a href="{{ cook.get_absolute_url }}">
-              {{ cook.username }} {% if user == cook %} (Me){% endif %}
-            </a>
-          </td>
-          <td>{{ cook.position }}</td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% else %}
-    <p>There are no cooks for this dish yet.</p>
-  {% endif %}
-{% endblock %}
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+
+    <section class="py-sm-7 py-5 position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mx-auto">
+            <div class="mt-n8 mt-md-n9 text-center">
+              <h1 class="text-white pt-3 mt-n5">
+                {{ dish.name }}
+                <a href="{% url 'kitchen_board:dish_update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+                  Update
+                </a>
+                <a href="{% url 'kitchen_board:dish_delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+                  Delete
+                </a>
+              </h1>
+            </div>
+            <div class="row py-5">
+              <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+
+                <p><strong>Price:</strong> {{ dish.price }}</p>
+                <p><strong>Dish Type:</strong>
+                  <a href="{% url 'kitchen_board:dish_type_detail' dish.dish_type.id %}">
+                    {{ dish.dish_type }}
+                  </a>
+                </p>
+                <p><strong>Description:</strong> {{ dish.description }}</p>
+                <p><strong>Ingredients:</strong>
+                  {% for ingredient in dish.ingredients.all %}
+                    <a href="{% url 'kitchen_board:ingredient_detail' ingredient.id %}">
+                      {{ ingredient.name }}
+                    </a>{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+                <h3>
+                  Cooks
+                    {% if dish in user.dishes.all %}
+                    <a href="{% url 'kitchen_board:toggle_dish_assign' pk=dish.id %}" class="btn btn-danger link-to-page">
+                      Delete me from this dish
+                    </a>
+                  {% else %}
+                    <a href="{% url 'kitchen_board:toggle_dish_assign' pk=dish.id %}" class="btn btn-success link-to-page">
+                      Assign me to this dish
+                    </a>
+                  {% endif %}
+
+                </h3>
+                {% if dish.cooks.all %}
+                  <table class="table">
+                    <tr>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Position</th>
+                    </tr>
+                    {% for cook in dish.cooks.all %}
+                      <tr>
+                        <td>{{ cook.id }}</td>
+                        <td>
+                          <a href="{{ cook.get_absolute_url }}">
+                            {{ cook.username }} {% if user == cook %} (Me){% endif %}
+                          </a>
+                        </td>
+                        <td>{{ cook.position }}</td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                {% else %}
+                  <p>There are no cooks for this dish yet.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{% endblock content %}

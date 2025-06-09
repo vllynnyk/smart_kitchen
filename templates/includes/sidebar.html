@@ -1,23 +1,70 @@
-<ul class="sidebar-nav list-group">
-  {% if user.is_authenticated %}
-    <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
-    <li class="list-group-item">
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link text-start p-0" style="border: none; background: none;">
-          Logout
+<div class="container position-sticky z-index-sticky top-0">
+<div class="row">
+  <div class="col-12">
+    <nav class="navbar navbar-expand-lg  blur border-radius-xl mt-4 top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+      <div class="container-fluid px-0">
+        <a class="navbar-brand font-weight-bolder ms-sm-3" href="{% url 'kitchen_board:index' %}" rel="tooltip" title="Home Page" data-placement="bottom">
+          Smart Kitchen
+        </a>
+        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mt-2">
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </span>
         </button>
-      </form>
-    </li>
-  {% else %}
-    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-  {% endif %}
+        <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
+          <ul class="navbar-nav navbar-nav-hover ms-auto">
+            <li class="nav-item mx-2">
+              <a class="nav-link ps-2 d-flex" href="{% url 'kitchen_board:index' %}" rel="tooltip" title="Home Page" data-placement="bottom">
+                <i class="material-icons opacity-6 me-2 text-md">article</i>
+                Home
+              </a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link ps-2 d-flex" href="{% url 'kitchen_board:cook_list' %}">
+                <i class="material-icons opacity-6 me-2 text-md">article</i>
+                All Cooks
+              </a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link ps-2 d-flex" href="{% url 'kitchen_board:dish_type_list' %}">
+                <i class="material-icons opacity-6 me-2 text-md">article</i>
+                All Dish Types
+              </a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link ps-2 d-flex" href="{% url 'kitchen_board:dish_list' %}">
+                <i class="material-icons opacity-6 me-2 text-md">article</i>
+                All Dishes
+              </a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link ps-2 d-flex" href="{% url 'kitchen_board:ingredient_list' %}">
+                <i class="material-icons opacity-6 me-2 text-md">article</i>
+                All Ingredients
+              </a>
+            </li>
+            {% if request.user.is_authenticated %}
+              <li class="nav-item mx-2 d-flex align-items-center">
+                <form method="post" action="{% url 'logout' %}" class="m-0 p-0">
+                  {% csrf_token %}
+                  <button type="submit"
+                          class="nav-link btn btn-link p-0 m-0 text-decoration-none d-flex align-items-center"
+                          style="background: none; border: none;">
+                    <i class="material-icons opacity-6 me-2 text-md">logout</i>
+                    <span class="text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign OUT">
+                      Logout
+                    </span>
+                  </button>
+                </form>
+              </li>
+            {% endif %}
 
-  <br>
-
-  <li class="list-group-item"><a href="{% url 'kitchen_board:index' %}">Home</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen_board:cook_list' %}">All Cooks</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen_board:dish_type_list' %}">All Dish Types</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen_board:dish_list' %}">All Dishes</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen_board:ingredient_list' %}">All Ingredients</a></li>
-</ul>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+</div>

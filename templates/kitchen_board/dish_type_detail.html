@@ -1,26 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ dish_type.name }}</h1>
 
-  {% if dish_type.dishes.all %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Dish Name</th>
-      </tr>
-      {% for dish in dish_type.dishes.all %}
-        <tr>
-          <td>{{ dish.id }}</td>
-          <td>
-            <a href="{{ dish.get_absolute_url }}">
-              {{ dish.name }}
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% else %}
-    <p>There are no dishes for this dish type yet.</p>
-  {% endif %}
-{% endblock %}
+  <header>
+    <div class="page-header min-height-300" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png');" loading="lazy">
+      <span class="mask bg-gradient-dark opacity-8"></span>
+    </div>
+  </header>
+
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+
+    <section class="py-sm-7 py-5 position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mx-auto">
+            <div class="mt-n8 mt-md-n9 text-center">
+              <h1 class="text-white pt-3 mt-n5">
+                {{ dish_type.name }}
+              </h1>
+            </div>
+            <div class="row py-5">
+              <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+
+                {% if dish_type.dishes.all %}
+                  <table class="table">
+                    <tr>
+                      <th>ID</th>
+                      <th>Dish Name</th>
+                    </tr>
+                    {% for dish in dish_type.dishes.all %}
+                      <tr>
+                        <td>{{ dish.id }}</td>
+                        <td>
+                          <a href="{{ dish.get_absolute_url }}">
+                            {{ dish.name }}
+                          </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                {% else %}
+                  <p>There are no dishes for this dish type yet.</p>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{% endblock content %}

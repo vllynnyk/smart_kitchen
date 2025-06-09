@@ -2,43 +2,74 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-    <h1>
-      Cooks
-      <a href="{% url 'kitchen_board:cook_create' %}" class="btn btn-primary link-to-page">
-        Add Cook
-      </a>
-    </h1>
+  <title>
+    Smart Kitchen | Cook List
+  </title>
+  <header class="header-2">
+    <div class="page-header min-vh-50 relative" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png')">
+      <span class="mask bg-gradient-primary opacity-4"></span>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Cooks</h1>
+            <p class="lead text-white mt-3">...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
 
-   <form method="GET" action="">
-      {{ search_form|crispy }}
-      <input type="submit" class="btn btn-secondary" value="🔍">
-    </form>
-    <br>
+    <section class="py-2">
+      <div class="container-fluid">
+        <div class="row justify-content-between align-items-center px-3">
 
+          <div class="col-auto">
+            <a href="{% url 'kitchen_board:cook_create' %}" class="btn bg-gradient-primary btn-icon d-flex align-items-center">
+              <i class="material-icons me-2" aria-hidden="true">add</i>
+              Cook
+            </a>
+          </div>
+
+          <div class="col-auto">
+            <form method="get" action="" class="mb-0">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+                {{ search_form|crispy }}
+                <button type="submit" class="btn btn-secondary">🔍</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
 
     {% if cook_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Position</th>
-        <th>Years of Experience</th>
-      </tr>
-    {% for cook in cook_list %}
-      <tr>
-        <td>{{ cook.id }}</td>
-        <td><a href="{{ cook.get_absolute_url }}">{{ cook.username }} {% if user == cook %} (Me){% endif %}</a></td>
-        <td>{{ cook.first_name }}</td>
-        <td>{{ cook.last_name }}</td>
-        <td>{{ cook.position }}</td>
-        <td>{{ cook.years_of_experience }}</td>
-      </tr>
-    {% endfor %}
-
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Position</th>
+          <th>Years of Experience</th>
+        </tr>
+      {% for cook in cook_list %}
+        <tr>
+          <td>{{ cook.id }}</td>
+          <td><a href="{{ cook.get_absolute_url }}">{{ cook.username }} {% if user == cook %} (Me){% endif %}</a></td>
+          <td>{{ cook.first_name }}</td>
+          <td>{{ cook.last_name }}</td>
+          <td>{{ cook.position }}</td>
+          <td>{{ cook.years_of_experience }}</td>
+        </tr>
+      {% endfor %}
     </table>
     {% else %}
       <p>There are no cooks on the Kitchen Board.</p>
     {% endif %}
+  </div>
 {% endblock %}

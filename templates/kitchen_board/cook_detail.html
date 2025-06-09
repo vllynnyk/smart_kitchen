@@ -1,52 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Username: {{ cook.username }}
-    <a href="{% url 'kitchen_board:cook_update' pk=cook.id %}" class="btn btn-secondary link-to-page">
-      Update position or experience
-    </a>
-    <a href="{% url 'kitchen_board:cook_delete' pk=cook.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-  </h1>
 
-  <br>
+  <header>
+    <div class="page-header min-height-300" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png');" loading="lazy">
+      <span class="mask bg-gradient-dark opacity-8"></span>
+    </div>
+  </header>
 
-  <p><strong>First name:</strong> {{ cook.first_name }}</p>
-  <p><strong>Last name:</strong> {{ cook.last_name }}</p>
-  <p><strong>Position:</strong> {{ cook.position }}</p>
-  <p><strong>Experience:</strong> {{ cook.years_of_experience }}</p>
-  <p><strong>Is staff:</strong> {{ cook.is_staff }}</p>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <section class="py-sm-7 py-5 position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mx-auto">
+            <div class="mt-n8 mt-md-n9 text-center">
+              <h1 class="text-white pt-3 mt-n5">
+                {{ cook.username }}
+                <a href="{% url 'kitchen_board:cook_update' pk=cook.id %}" class="btn btn-secondary link-to-page">
+                  Update position or experience
+                </a>
+                <a href="{% url 'kitchen_board:cook_delete' pk=cook.id %}" class="btn btn-danger link-to-page">
+                  Delete
+                </a>
+              </h1>
+            </div>
+            <div class="row py-5">
+              <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
 
-  <div>
-    <h4>Dishes</h4>
-    {% if cook.dishes.all %}
-      <table class="table">
-        <tr>
-          <th>ID</th>
-          <th>Dish</th>
-          <th>Dish Type</th>
-        </tr>
-        {% for dish in cook.dishes.all %}
-          <tr>
-            <td>{{ dish.id }}</td>
-            <td>
-              <a href="{{ dish.get_absolute_url }}">
-                {{ dish.name }}
-              </a>
-            </td>
-            <td>
-              <a href="{% url 'kitchen_board:dish_type_detail' pk=dish.dish_type.id%}">
-                {{ dish.dish_type }}
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-    {% else %}
-      <p>There are no dishes for this cook yet.</p>
-    {% endif %}
+                <p><strong>First name:</strong> {{ cook.first_name }}</p>
+                <p><strong>Last name:</strong> {{ cook.last_name }}</p>
+                <p><strong>Position:</strong> {{ cook.position }}</p>
+                <p><strong>Experience:</strong> {{ cook.years_of_experience }}</p>
+                <p><strong>Is staff:</strong> {{ cook.is_staff }}</p>
+
+                <div>
+                  <p><strong>Dishes:</strong></p>
+                  {% if cook.dishes.all %}
+                    <table class="table">
+                      <tr>
+                        <th>ID</th>
+                        <th>Dish</th>
+                        <th>Dish Type</th>
+                      </tr>
+                      {% for dish in cook.dishes.all %}
+                        <tr>
+                          <td>{{ dish.id }}</td>
+                          <td>
+                            <a href="{{ dish.get_absolute_url }}">
+                              {{ dish.name }}
+                            </a>
+                          </td>
+                          <td>
+                            <a href="{% url 'kitchen_board:dish_type_detail' pk=dish.dish_type.id%}">
+                              {{ dish.dish_type }}
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </table>
+                  {% else %}
+                    <p>There are no dishes for this cook yet.</p>
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
-{% endblock %}
+
+{% endblock content %}

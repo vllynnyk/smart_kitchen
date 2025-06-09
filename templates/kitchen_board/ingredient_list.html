@@ -2,58 +2,89 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Ingredients
-    <a href="{% url 'kitchen_board:ingredient_create' %}" class="btn btn-primary link-to-page">
-      Add Ingredient
-    </a>
-  </h1>
+  <title>
+    Smart Kitchen | Ingredient List
+  </title>
+  <header class="header-2">
+    <div class="page-header min-vh-50 relative" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png')">
+      <span class="mask bg-gradient-primary opacity-4"></span>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Ingredients</h1>
+            <p class="lead text-white mt-3">...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+      <section class="py-2">
+      <div class="container-fluid">
+        <div class="row justify-content-between align-items-center px-3">
 
-  <form method="GET" action="">
-    {{ search_form|crispy }}
-    <input type="submit" class="btn btn-secondary" value="🔍">
-  </form>
-  <br>
-
-  {% if ingredient_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Stock Count</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-
-      {% for ingredient in ingredient_list %}
-        <tr>
-          <td>
-              {{ ingredient.id }}
-          </td>
-          <td>
-            <a href="{% url 'kitchen_board:ingredient_detail' ingredient.id %}">
-              {{ ingredient.name }}
+          <div class="col-auto">
+            <a href="{% url 'kitchen_board:ingredient_create' %}" class="btn bg-gradient-primary btn-icon d-flex align-items-center">
+              <i class="material-icons me-2" aria-hidden="true">add</i>
+              Ingredient
             </a>
-          </td>
-          <td>
-            {{ ingredient.stock_count}}
-          </td>
-          <td>
-              <a href="{% url 'kitchen_board:ingredient_update' ingredient.id %}">
-                Update
+          </div>
+
+          <div class="col-auto">
+            <form method="get" action="" class="mb-0">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+                {{ search_form|crispy }}
+                <button type="submit" class="btn btn-secondary">🔍</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    {% if ingredient_list %}
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Stock Count</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+
+        {% for ingredient in ingredient_list %}
+          <tr>
+            <td>
+                {{ ingredient.id }}
+            </td>
+            <td>
+              <a href="{% url 'kitchen_board:ingredient_detail' ingredient.id %}">
+                {{ ingredient.name }}
               </a>
             </td>
             <td>
-              <a style="color: red"
-                href="{% url 'kitchen_board:ingredient_delete' ingredient.id %}">
-                Delete
-              </a>
+              {{ ingredient.stock_count}}
             </td>
-        </tr>
-      {% endfor %}
-    </table>
+            <td>
+                <a href="{% url 'kitchen_board:ingredient_update' ingredient.id %}">
+                  Update
+                </a>
+              </td>
+              <td>
+                <a style="color: red"
+                  href="{% url 'kitchen_board:ingredient_delete' ingredient.id %}">
+                  Delete
+                </a>
+              </td>
+          </tr>
+        {% endfor %}
+      </table>
 
-  {% else %}
-    <p>There are no ingredients on the Kitchen Board.</p>
-  {% endif %}
+    {% else %}
+      <p>There are no ingredients on the Kitchen Board.</p>
+    {% endif %}
+  </div>
 {% endblock %}

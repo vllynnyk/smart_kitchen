@@ -2,54 +2,87 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Dish Types
-    <a href="{% url 'kitchen_board:dish_type_create' %}" class="btn btn-primary link-to-page">
-      Add Dish Type
-    </a>
-  </h1>
+  <title>
+    Smart Kitchen | Dish Type List
+  </title>
+  <header class="header-2">
+    <div class="page-header min-vh-50 relative" style="background-image: url('{{ ASSETS_ROOT }}/img/img_2.png')">
+      <span class="mask bg-gradient-primary opacity-4"></span>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Dish Types</h1>
+            <p class="lead text-white mt-3">...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
 
-  <form method="GET" action="">
-    {{ search_form|crispy }}
-    <input type="submit" class="btn btn-secondary" value="🔍">
-  </form>
-  <br>
+    <section class="py-2">
+    <div class="container-fluid">
+      <div class="row justify-content-between align-items-center px-3">
 
-  {% if dish_type_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
+        <div class="col-auto">
+          <a href="{% url 'kitchen_board:dish_type_create' %}" class="btn bg-gradient-primary btn-icon d-flex align-items-center">
+            <i class="material-icons me-2" aria-hidden="true">add</i>
+            Dish Type
+          </a>
+        </div>
 
-      {% for dish_type in dish_type_list %}
+        <div class="col-auto">
+          <form method="get" action="" class="mb-0">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
+              {{ search_form|crispy }}
+              <button type="submit" class="btn btn-secondary">🔍</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    {% if dish_type_list %}
+      <table class="table">
         <tr>
-          <td>
-              {{ dish_type.id }}
-          </td>
-          <td>
-              <a href="{% url 'kitchen_board:dish_type_detail' dish_type.id %}">
-                {{ dish_type.name }}
-              </a>
-          </td>
-          <td>
-              <a href="{% url 'kitchen_board:dish_type_update' dish_type.id %}">
-                Update
-              </a>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+
+        {% for dish_type in dish_type_list %}
+          <tr>
+            <td>
+                {{ dish_type.id }}
             </td>
             <td>
-              <a style="color: red"
-                href="{% url 'kitchen_board:dish_type_delete' dish_type.id %}">
-                Delete
-              </a>
+                <a href="{% url 'kitchen_board:dish_type_detail' dish_type.id %}">
+                  {{ dish_type.name }}
+                </a>
             </td>
-        </tr>
-      {% endfor %}
-    </table>
+            <td>
+                <a href="{% url 'kitchen_board:dish_type_update' dish_type.id %}">
+                  Update
+                </a>
+              </td>
+              <td>
+                <a style="color: red"
+                  href="{% url 'kitchen_board:dish_type_delete' dish_type.id %}">
+                  Delete
+                </a>
+              </td>
+          </tr>
+        {% endfor %}
+      </table>
 
-  {% else %}
-    <p>There are no dish types on the Kitchen Board.</p>
-  {% endif %}
+    {% else %}
+      <p>There are no dish types on the Kitchen Board.</p>
+    {% endif %}
+  </div>
 {% endblock %}
