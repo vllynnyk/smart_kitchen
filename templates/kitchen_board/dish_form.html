@@ -20,6 +20,7 @@
             <form role="form" id="create-form" method="post" autocomplete="off" novalidate>
               {% csrf_token %}
               <div class="card-body">
+                {% csrf_token %}
                 {{ form|crispy }}
 
                 <!-- Submit -->
