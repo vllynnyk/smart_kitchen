@@ -67,7 +67,8 @@ class Dish(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     dish_type = models.ForeignKey(
-        DishType,related_name="dishes",
+        DishType,
+        related_name="dishes",
         on_delete=models.CASCADE
     )
     cooks = models.ManyToManyField(
