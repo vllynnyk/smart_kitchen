@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
-from smart_kitchen import settings
+from smart_kitchen.settings import base
 
 
 class DishType(models.Model):
@@ -72,7 +72,7 @@ class Dish(models.Model):
         on_delete=models.CASCADE
     )
     cooks = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
+        base.AUTH_USER_MODEL,
         related_name="dishes"
     )
     ingredients = models.ManyToManyField(Ingredient, related_name="dishes")
