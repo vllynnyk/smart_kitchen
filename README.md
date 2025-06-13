@@ -1,5 +1,8 @@
 # 🍽️ Smart Kitchen
 
+[🔗 View on GitHub](https://github.com/vllynnyk/smart_kitchen)  
+[🚀 Live Demo on Render](https://smart-kitchen-kytp.onrender.com)    
+
 **Smart Kitchen** is a Django-based web application for managing dishes, ingredients, and cooks.  
 It provides a modern and responsive interface, ideal for both personal use and restaurant kitchens.
 
